@@ -9,11 +9,15 @@ import java.util.List;
 
 public class ScoreboardService {
 
+    private static final int MIN_SCORE = 0;
+    private static final int MAX_SCORE = 10000;
+
     private final Clock clock;
 
     // for the sake of simplicity of unit tests we treat the validator as integral part of this service
     // in a real world scenario we could potentially mock it out and test separately
-    private final ScoreboardValidator validator = new ScoreboardValidator();
+    // also could be broken down further to more dedicated validators
+    private final ScoreboardValidator validator = new ScoreboardValidator(MIN_SCORE, MAX_SCORE);
 
     private final Scoreboard scoreboard = new Scoreboard(); // in a real app we would probably be loaded via some DAO
 
@@ -45,7 +49,7 @@ public class ScoreboardService {
      * @param awayTeamScore
      * @return same match instance with updated scores
      */
-    public Match updateScore(Match match, int homeTeamScore, int awayTeamScore) {
+    public Match updateMatchScore(Match match, int homeTeamScore, int awayTeamScore) {
         //TODO
         return null;
     }

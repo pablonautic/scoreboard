@@ -104,7 +104,7 @@ public class ScoreboardServiceTests {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 10000})
-    void updateScore_forValidMatchScore_setNewScores(int score) {
+    void updateMatchScore_forValidMatchScore_setNewScores(int score) {
 
         //arrange
         var match = scoreboardService.newMatch(TEAM1, TEAM2);
@@ -113,7 +113,7 @@ public class ScoreboardServiceTests {
         assertEquals(0, match.getAwayTeamScore());
 
         //act
-        var updatedMatch = scoreboardService.updateScore(match, score, score);
+        var updatedMatch = scoreboardService.updateMatchScore(match, score, score);
 
         //assert
         assertNotNull(updatedMatch);
@@ -123,14 +123,14 @@ public class ScoreboardServiceTests {
     }
 
     @Test
-    void updateScore_forMatchNotOnScoreboard_throwsValidationException() {
+    void updateMatchScore_forMatchNotOnScoreboard_throwsValidationException() {
 
         //arrange
         var match = new Match(SOME_TIME, TEAM1, TEAM2); //some random match
 
         //act
         var exception = assertThrows(ValidationException.class, () ->
-                scoreboardService.updateScore(match, HOME_SCORE, AWAY_SCORE));
+                scoreboardService.updateMatchScore(match, HOME_SCORE, AWAY_SCORE));
 
         //assert
         assertEquals("Match '" + match.getId() + "' is not on scoreboard", exception.getMessage());
@@ -138,14 +138,14 @@ public class ScoreboardServiceTests {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 10001})
-    void updateScore_whenHomeScoreIsOutOfRange_throwsValidationException(int score) {
+    void updateMatchScore_whenHomeScoreIsOutOfRange_throwsValidationException(int score) {
 
         //arrange
         Match match = scoreboardService.newMatch(TEAM1, TEAM2);
 
         //act
         var exception = assertThrows(ValidationException.class, () ->
-                scoreboardService.updateScore(match, HOME_SCORE, AWAY_SCORE));
+                scoreboardService.updateMatchScore(match, HOME_SCORE, AWAY_SCORE));
 
         //assert
         assertEquals("Home score value '" + score + "' is not within expected range: [0,10000]",
