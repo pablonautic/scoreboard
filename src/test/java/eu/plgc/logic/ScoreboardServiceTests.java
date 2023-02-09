@@ -56,12 +56,24 @@ public class ScoreboardServiceTests {
 
     @Test
     void newMatch_forInvalidHomeTeam_throwsValidationException() {
-        // TODO
+        //arrange
+
+        //act
+        var exception = assertThrows(ValidationException.class, () -> scoreboardService.newMatch(null, TEAM3));
+
+        //assert
+        assertEquals("Home team cannot be null", exception.getMessage());
     }
 
     @Test
     void newMatch_forInvalidAwayTeam_throwsValidationException() {
-        // TODO
+        //arrange
+
+        //act
+        var exception = assertThrows(ValidationException.class, () -> scoreboardService.newMatch(TEAM3, null));
+
+        //assert
+        assertEquals("Away team cannot be null", exception.getMessage());
     }
 
     @Test
@@ -90,8 +102,9 @@ public class ScoreboardServiceTests {
         assertEquals("Team '" + TEAM1.getName() + "' is already playing a match", exception.getMessage());
     }
 
-    @Test
-    void updateScore_forValidMatchAndScores_setNewScores() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 10000})
+    void updateScore_forValidMatchScore_setNewScores(int score) {
 
         //arrange
         var match = scoreboardService.newMatch(TEAM1, TEAM2);
@@ -100,13 +113,13 @@ public class ScoreboardServiceTests {
         assertEquals(0, match.getAwayTeamScore());
 
         //act
-        var updatedMatch = scoreboardService.updateScore(match, HOME_SCORE, AWAY_SCORE);
+        var updatedMatch = scoreboardService.updateScore(match, score, score);
 
         //assert
         assertNotNull(updatedMatch);
         assertEquals(match, updatedMatch);
-        assertEquals(HOME_SCORE, updatedMatch.getHomeTeamScore());
-        assertEquals(AWAY_SCORE, updatedMatch.getAwayTeamScore());
+        assertEquals(score, updatedMatch.getHomeTeamScore());
+        assertEquals(score, updatedMatch.getAwayTeamScore());
     }
 
     @Test
