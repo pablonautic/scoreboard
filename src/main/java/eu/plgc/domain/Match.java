@@ -3,7 +3,6 @@ package eu.plgc.domain;
 import eu.plgc.domain.base.EntityBase;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class Match extends EntityBase {
 
