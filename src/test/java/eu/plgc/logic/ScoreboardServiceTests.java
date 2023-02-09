@@ -1,15 +1,12 @@
-package logic;
+package eu.plgc.logic;
 
 import eu.plgc.domain.Match;
 import eu.plgc.domain.Team;
-import eu.plgc.logic.ScoreboardService;
-import eu.plgc.logic.ValidationException;
-import objectMothers.TeamObjectMother;
+import eu.plgc.objectMothers.TeamObjectMother;
+import eu.plgc.utils.MutableClock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.MutableClock;
 
-import java.time.Clock;
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,12 +40,13 @@ public class ScoreboardServiceTests {
 
         //assert
         assertNotNull(match);
+        assertTrue(scoreboardService.hasMatch(match));
+
         assertEquals(team1, match.getHomeTeam());
         assertEquals(team2, match.getAwayTeam());
         assertEquals(0, match.getHomeTeamScore());
         assertEquals(0, match.getAwayTeamScore());
         assertEquals(instant, match.getStartTime());
-
     }
 
     @Test

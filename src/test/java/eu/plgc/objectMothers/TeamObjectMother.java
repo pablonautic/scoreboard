@@ -1,4 +1,4 @@
-package objectMothers;
+package eu.plgc.objectMothers;
 
 import com.flextrade.jfixture.JFixture;
 import eu.plgc.domain.Team;

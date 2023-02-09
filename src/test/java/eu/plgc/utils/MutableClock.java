@@ -1,4 +1,4 @@
-package utils;
+package eu.plgc.utils;
 
 import java.time.Clock;
 import java.time.Instant;

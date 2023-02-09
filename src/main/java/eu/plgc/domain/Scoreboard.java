@@ -7,7 +7,19 @@ public class Scoreboard {
 
     private final List<Match> matches = new ArrayList<>();
 
-    public List<Match> getMatches() {
-        return matches;
+    public List<Match> getMatchesImmutable() {
+        return List.of(matches.toArray(new Match[0]));
+    }
+
+    public void addMatch(Match match) {
+        matches.add(match);
+    }
+
+    public void removeMatch(Match match) {
+        matches.remove(match);
+    }
+
+    public boolean hasMatch(Match match) {
+        return matches.contains(match);
     }
 }

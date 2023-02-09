@@ -1,6 +1,7 @@
 package eu.plgc.logic;
 
 import eu.plgc.domain.Match;
+import eu.plgc.domain.Scoreboard;
 import eu.plgc.domain.Team;
 
 import java.time.Clock;
@@ -8,7 +9,13 @@ import java.util.List;
 
 public class ScoreboardService {
 
-    private Clock clock;
+    private final Clock clock;
+
+    // for the sake of simplicity of unit tests we treat the validator as integral part of this service
+    // in a real world scenario we could potentially mock it out and test separately
+    private final ScoreboardValidator validator = new ScoreboardValidator();
+
+    private final Scoreboard scoreboard = new Scoreboard(); // in a real app we would probably be loaded via some DAO
 
     public ScoreboardService(Clock clock) {
         this.clock = clock;
@@ -22,8 +29,11 @@ public class ScoreboardService {
      * @return new match instance
      */
     public Match newMatch(Team homeTeam, Team awayTeam) {
-        //TODO validation
-        return new Match(clock.instant(), homeTeam, awayTeam);
+        validator.newMatchValidate(scoreboard, homeTeam, awayTeam);
+
+        Match match = new Match(clock.instant(), homeTeam, awayTeam);
+        scoreboard.addMatch(match);
+        return match;
     }
 
     /**
@@ -58,7 +68,11 @@ public class ScoreboardService {
      * @return
      */
     public List<Match> getSummary() {
-        //TODO
-        return null;
+        //TODO real impl
+        return scoreboard.getMatchesImmutable();
+    }
+
+    boolean hasMatch(Match match) {
+        return scoreboard.hasMatch(match);
     }
 }
