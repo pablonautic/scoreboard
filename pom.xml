@@ -21,6 +21,12 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.flextrade.jfixture</groupId>
+            <artifactId>jfixture</artifactId>
+            <version>2.7.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     
 </project>
