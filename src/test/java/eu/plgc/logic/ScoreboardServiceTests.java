@@ -149,6 +149,8 @@ public class ScoreboardServiceTests {
         assertEquals("Match cannot be null", exception.getMessage());
     }
 
+    //below two tests could be combined further using MethodSource
+
     @ParameterizedTest
     @ValueSource(ints = {-1, 10001})
     void updateMatchScore_whenHomeScoreIsOutOfRange_throwsValidationException(int score) {
@@ -179,5 +181,47 @@ public class ScoreboardServiceTests {
         //assert
         assertEquals("Away score value '" + score + "' is not within expected range: [0,10000]",
                 exception.getMessage());
+    }
+
+    @Test
+    void finishMatch_ForValidMatch_removesMatchFromScoreboard() {
+
+        //arrange
+        Match match = scoreboardService.newMatch(TEAM1, TEAM2);
+
+        //act
+        Match removedMatch = scoreboardService.finishMatch(match);
+
+        //assert
+        assertNotNull(removedMatch);
+        assertEquals(match, removedMatch);
+        assertFalse(scoreboardService.hasMatch(match));
+    }
+
+    @Test
+    void finishMatch_forMatchNotOnScoreboard_throwsValidationException() {
+
+        //arrange
+        var match = new Match(SOME_TIME, TEAM1, TEAM2); //some random match
+
+        //act
+        var exception = assertThrows(ValidationException.class, () ->
+                scoreboardService.finishMatch(match));
+
+        //assert
+        assertEquals("Match '" + match.getId() + "' is not on scoreboard", exception.getMessage());
+    }
+
+    @Test
+    void finishMatch_forNullMatch_throwsValidationException() {
+
+        //arrange
+
+        //act
+        var exception = assertThrows(ValidationException.class, () ->
+                scoreboardService.finishMatch(null));
+
+        //assert
+        assertEquals("Match cannot be null", exception.getMessage());
     }
 }
