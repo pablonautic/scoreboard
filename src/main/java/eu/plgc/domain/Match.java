@@ -27,8 +27,13 @@ public class Match extends EntityBase {
         return homeTeamScore + awayTeamScore;
     }
 
-    public String getDisplayString() {
-        return "%s %d - %s %d".formatted(homeTeam.getName(), homeTeamScore, awayTeam.getName(), awayTeamScore);
+    public String getDisplayString(boolean includeStartTime) {
+        return "%s %d - %s %d%s"
+                .formatted(homeTeam.getName(),
+                        homeTeamScore,
+                        awayTeam.getName(),
+                        awayTeamScore,
+                        includeStartTime ? " " + startTime : "");
     }
 
     public Instant getStartTime() {

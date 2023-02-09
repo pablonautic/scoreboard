@@ -27,7 +27,7 @@ public class MatchTests {
     }
 
     @Test
-    void getDisplayString_forGivenMatch_returnsString() {
+    void getDisplayString_forGivenMatchWithoutTime_returnsString() {
 
         //arrange
         var match = new Match(Instant.MIN, TEAM1, TEAM2);
@@ -35,9 +35,25 @@ public class MatchTests {
         match.setAwayTeamScore(7);
 
         //act
-        var result = match.getDisplayString();
+        var result = match.getDisplayString(false);
 
         //assert
         assertEquals("Poland 3 - Mexico 7", result);
+    }
+
+    @Test
+    void getDisplayString_forGivenMatchWithTime_returnsString() {
+
+        //arrange
+        var now = Instant.now();
+        var match = new Match(now, TEAM1, TEAM2);
+        match.setHomeTeamScore(3);
+        match.setAwayTeamScore(7);
+
+        //act
+        var result = match.getDisplayString(true);
+
+        //assert
+        assertEquals("Poland 3 - Mexico 7 " + now, result);
     }
 }
