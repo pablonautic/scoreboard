@@ -64,7 +64,7 @@ public class ScoreboardService {
      * @return finished match instance
      */
     public Match finishMatch(Match match) {
-        //TODO validation
+        validator.finishMatchValidate(scoreboard, match);
         scoreboard.removeMatch(match);
         return match;
     }
