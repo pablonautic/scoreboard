@@ -8,7 +8,7 @@ public class Scoreboard {
     private final List<Match> matches = new ArrayList<>();
 
     public List<Match> getMatchesImmutable() {
-        return matches; // List.of(matches.toArray(new Match[0]));
+        return List.of(matches.toArray(new Match[0]));
     }
 
     public void addMatch(Match match) {

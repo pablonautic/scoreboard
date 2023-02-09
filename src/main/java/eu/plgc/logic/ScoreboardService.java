@@ -5,7 +5,6 @@ import eu.plgc.domain.Scoreboard;
 import eu.plgc.domain.Team;
 
 import java.time.Clock;
-import java.util.Comparator;
 import java.util.List;
 
 import static java.util.Comparator.comparing;
@@ -82,7 +81,7 @@ public class ScoreboardService {
         return scoreboard
                         .getMatchesImmutable()
                         .stream()
-                        .sorted(comparing(Match::getTotalScore).reversed()
+                        .sorted(comparing(Match::calculateTotalScore).reversed()
                                 .thenComparing(
                                         comparing(Match::getStartTime).reversed())
                         )

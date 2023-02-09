@@ -23,7 +23,7 @@ public class Match extends EntityBase {
         //scores = 0 implicitly
     }
 
-    public int getTotalScore() {
+    public int calculateTotalScore() {
         return homeTeamScore + awayTeamScore;
     }
 
