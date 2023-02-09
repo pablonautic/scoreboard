@@ -27,6 +27,10 @@ public class Match extends EntityBase {
         return homeTeamScore + awayTeamScore;
     }
 
+    public String getDisplayString() {
+        return "%s %d - %s %d".formatted(homeTeam.getName(), homeTeamScore, awayTeam.getName(), awayTeamScore);
+    }
+
     public Instant getStartTime() {
         return startTime;
     }
