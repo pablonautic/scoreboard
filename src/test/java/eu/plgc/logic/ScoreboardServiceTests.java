@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreboardServiceTests {
 
-
     private static final Instant SOME_TIME = Instant.parse("2023-02-09T10:15:30.00Z");
 
     private final Team TEAM1 = TeamObjectMother.create();
@@ -255,7 +254,9 @@ public class ScoreboardServiceTests {
     void getSummary_forMatchesWithDifferentScoreSum_returnsBiggerFirst() {
 
         //arrange
+        clock.setInstant(SOME_TIME);
         Match match1 = scoreboardService.newMatch(TEAM1, TEAM2);
+
         clock.setInstant(SOME_TIME.plusSeconds(10));
         Match match2 = scoreboardService.newMatch(TEAM3, TEAM4);
 
@@ -274,6 +275,7 @@ public class ScoreboardServiceTests {
     void getSummary_forMatchesWithSameScoreSum_returnsLatestFirst() {
 
         //arrange
+        clock.setInstant(SOME_TIME);
         Match match1 = scoreboardService.newMatch(TEAM1, TEAM2);
         clock.setInstant(SOME_TIME.plusSeconds(10));
         Match match2 = scoreboardService.newMatch(TEAM3, TEAM4);

@@ -23,6 +23,10 @@ public class Match extends EntityBase {
         //scores = 0 implicitly
     }
 
+    public int getTotalScore() {
+        return homeTeamScore + awayTeamScore;
+    }
+
     public Instant getStartTime() {
         return startTime;
     }
@@ -49,5 +53,17 @@ public class Match extends EntityBase {
 
     public void setAwayTeamScore(int awayTeamScore) {
         this.awayTeamScore = awayTeamScore;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Match{");
+        sb.append("startTime=").append(startTime);
+        sb.append(", homeTeam=").append(homeTeam);
+        sb.append(", homeTeamScore=").append(homeTeamScore);
+        sb.append(", awayTeam=").append(awayTeam);
+        sb.append(", awayTeamScore=").append(awayTeamScore);
+        sb.append('}');
+        return sb.toString();
     }
 }

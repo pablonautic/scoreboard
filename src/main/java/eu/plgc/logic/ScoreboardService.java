@@ -5,7 +5,10 @@ import eu.plgc.domain.Scoreboard;
 import eu.plgc.domain.Team;
 
 import java.time.Clock;
+import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Comparator.comparing;
 
 public class ScoreboardService {
 
@@ -76,8 +79,14 @@ public class ScoreboardService {
      * @return
      */
     public List<Match> getSummary() {
-        //TODO real impl
-        return scoreboard.getMatchesImmutable();
+        return scoreboard
+                        .getMatchesImmutable()
+                        .stream()
+                        .sorted(comparing(Match::getTotalScore).reversed()
+                                .thenComparing(
+                                        comparing(Match::getStartTime).reversed())
+                        )
+                        .toList();
     }
 
     boolean hasMatch(Match match) {
