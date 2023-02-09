@@ -1,4 +1,4 @@
-package eu.plgc.ui;
+package eu.plgc.cli;
 
 import eu.plgc.logic.ScoreboardService;
 

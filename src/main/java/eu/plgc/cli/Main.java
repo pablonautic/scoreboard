@@ -1,4 +1,4 @@
-package eu.plgc.ui;
+package eu.plgc.cli;
 
 import eu.plgc.domain.Match;
 import eu.plgc.domain.Team;
