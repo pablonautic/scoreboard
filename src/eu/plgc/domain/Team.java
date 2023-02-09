@@ -1,10 +1,15 @@
 package eu.plgc.domain;
 
-public class Team {
+import eu.plgc.domain.base.EntityBase;
+
+import java.util.UUID;
+
+public class Team extends EntityBase {
 
     private final String name;
 
-    public Team(String name) {
+    public Team(UUID id, String name) {
+        super(id);
         this.name = name;
     }
 
