@@ -50,8 +50,11 @@ public class ScoreboardService {
      * @return same match instance with updated scores
      */
     public Match updateMatchScore(Match match, int homeTeamScore, int awayTeamScore) {
-        //TODO
-        return null;
+        validator.updateMatchScoreValidate(scoreboard, match, homeTeamScore, awayTeamScore);
+
+        match.setHomeTeamScore(homeTeamScore);
+        match.setAwayTeamScore(awayTeamScore);
+        return match;
     }
 
     /**

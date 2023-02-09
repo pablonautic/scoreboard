@@ -136,6 +136,19 @@ public class ScoreboardServiceTests {
         assertEquals("Match '" + match.getId() + "' is not on scoreboard", exception.getMessage());
     }
 
+    @Test
+    void updateMatchScore_forNullMatch_throwsValidationException() {
+
+        //arrange
+
+        //act
+        var exception = assertThrows(ValidationException.class, () ->
+                scoreboardService.updateMatchScore(null, HOME_SCORE, AWAY_SCORE));
+
+        //assert
+        assertEquals("Match cannot be null", exception.getMessage());
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {-1, 10001})
     void updateMatchScore_whenHomeScoreIsOutOfRange_throwsValidationException(int score) {
@@ -145,12 +158,26 @@ public class ScoreboardServiceTests {
 
         //act
         var exception = assertThrows(ValidationException.class, () ->
-                scoreboardService.updateMatchScore(match, HOME_SCORE, AWAY_SCORE));
+                scoreboardService.updateMatchScore(match, score, AWAY_SCORE));
 
         //assert
         assertEquals("Home score value '" + score + "' is not within expected range: [0,10000]",
                 exception.getMessage());
     }
 
-    //TODO away score
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 10001})
+    void updateMatchScore_whenAwayScoreIsOutOfRange_throwsValidationException(int score) {
+
+        //arrange
+        Match match = scoreboardService.newMatch(TEAM1, TEAM2);
+
+        //act
+        var exception = assertThrows(ValidationException.class, () ->
+                scoreboardService.updateMatchScore(match, HOME_SCORE, score));
+
+        //assert
+        assertEquals("Away score value '" + score + "' is not within expected range: [0,10000]",
+                exception.getMessage());
+    }
 }

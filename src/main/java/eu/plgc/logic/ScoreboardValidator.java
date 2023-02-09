@@ -22,6 +22,7 @@ public class ScoreboardValidator {
     }
 
     public void updateMatchScoreValidate(Scoreboard scoreboard, Match match, int homeTeamScore, int awayTeamScore) {
+        validateNotNull(match, "Match cannot be null");
         validateScoreboardHasMatch(scoreboard, match);
         validateScoreInRange(homeTeamScore, "Home");
         validateScoreInRange(awayTeamScore, "Away");
@@ -29,7 +30,7 @@ public class ScoreboardValidator {
 
     private void validateScoreInRange(int score, String prefix) {
         if (score < minScore || score > maxScore) {
-            throw new ValidationException("%s score value '%d' is not within expected range: [%d , %d]"
+            throw new ValidationException("%s score value '%d' is not within expected range: [%d,%d]"
                     .formatted(prefix, score, minScore, maxScore));
         }
     }
