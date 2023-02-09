@@ -21,6 +21,7 @@ public class ScoreboardServiceTests {
     private final Team TEAM1 = TeamObjectMother.create();
     private final Team TEAM2 = TeamObjectMother.create();
     private final Team TEAM3 = TeamObjectMother.create();
+    private final Team TEAM4 = TeamObjectMother.create();
 
     private static final int HOME_SCORE = 1;
     private static final int AWAY_SCORE = 2;
@@ -223,5 +224,68 @@ public class ScoreboardServiceTests {
 
         //assert
         assertEquals("Match cannot be null", exception.getMessage());
+    }
+
+    @Test
+    void getSummary_forEmptyScoreboard_returnsEmptyList() {
+
+        //arrange
+
+        //act
+        var result  = scoreboardService.getSummary();
+
+        //assert
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void getSummary_forSingleMatch_returnsMatch() {
+
+        //arrange
+        Match match = scoreboardService.newMatch(TEAM1, TEAM2);
+
+        //act
+        var result  = scoreboardService.getSummary();
+
+        //assert
+        assertTrue(result.contains(match));
+    }
+
+    @Test
+    void getSummary_forMatchesWithDifferentScoreSum_returnsBiggerFirst() {
+
+        //arrange
+        Match match1 = scoreboardService.newMatch(TEAM1, TEAM2);
+        clock.setInstant(SOME_TIME.plusSeconds(10));
+        Match match2 = scoreboardService.newMatch(TEAM3, TEAM4);
+
+        scoreboardService.updateMatchScore(match1, 2, 2);
+        scoreboardService.updateMatchScore(match2, 3, 2);
+
+        //act
+        var result  = scoreboardService.getSummary();
+
+        //assert
+        assertEquals(match2, result.get(0));
+        assertEquals(match1, result.get(1));
+    }
+
+    @Test
+    void getSummary_forMatchesWithSameScoreSum_returnsLatestFirst() {
+
+        //arrange
+        Match match1 = scoreboardService.newMatch(TEAM1, TEAM2);
+        clock.setInstant(SOME_TIME.plusSeconds(10));
+        Match match2 = scoreboardService.newMatch(TEAM3, TEAM4);
+
+        scoreboardService.updateMatchScore(match1, 2, 2);
+        scoreboardService.updateMatchScore(match2, 2, 2);
+
+        //act
+        var result  = scoreboardService.getSummary();
+
+        //assert
+        assertEquals(match2, result.get(0));
+        assertEquals(match1, result.get(1));
     }
 }
