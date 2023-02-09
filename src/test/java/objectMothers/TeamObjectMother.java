@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class TeamObjectMother {
 
-    private  static JFixture fixture = new JFixture();
+    private static final JFixture fixture = new JFixture();
 
     public static Team create() {
         return fixture.create(Team.class);

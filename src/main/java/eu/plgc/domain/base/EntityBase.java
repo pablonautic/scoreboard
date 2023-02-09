@@ -6,8 +6,9 @@ public abstract class EntityBase {
 
     private final UUID id;
 
-    protected EntityBase(UUID id) {
-        this.id = id;
+    // original idea was to a dedicated generator but for the sake of simplicity we generate it here.
+    protected EntityBase() {
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {

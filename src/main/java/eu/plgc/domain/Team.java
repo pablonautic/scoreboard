@@ -9,7 +9,6 @@ public class Team extends EntityBase {
     private final String name;
 
     public Team(UUID id, String name) {
-        super(id);
         this.name = name;
     }
 

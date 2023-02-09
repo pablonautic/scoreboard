@@ -3,9 +3,16 @@ package eu.plgc.logic;
 import eu.plgc.domain.Match;
 import eu.plgc.domain.Team;
 
+import java.time.Clock;
 import java.util.List;
 
 public class ScoreboardService {
+
+    private Clock clock;
+
+    public ScoreboardService(Clock clock) {
+        this.clock = clock;
+    }
 
     /**
      * 1. Start a new game, assuming initial score 0 – 0 and adding it the scoreboard
@@ -15,8 +22,8 @@ public class ScoreboardService {
      * @return new match instance
      */
     public Match newMatch(Team homeTeam, Team awayTeam) {
-        //TODO
-        return null;
+        //TODO validation
+        return new Match(clock.instant(), homeTeam, awayTeam);
     }
 
     /**

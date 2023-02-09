@@ -2,12 +2,12 @@ package eu.plgc.domain;
 
 import eu.plgc.domain.base.EntityBase;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 public class Match extends EntityBase {
 
-    private final ZonedDateTime startTime;
+    private final Instant startTime;
 
     private final Team homeTeam;
 
@@ -17,15 +17,14 @@ public class Match extends EntityBase {
 
     private int awayTeamScore;
 
-    public Match(UUID id, ZonedDateTime startTime, Team homeTeam, Team awayTeam) {
-        super(id);
+    public Match(Instant startTime, Team homeTeam, Team awayTeam) {
         this.startTime = startTime;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         //scores = 0 implicitly
     }
 
-    public ZonedDateTime getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
 

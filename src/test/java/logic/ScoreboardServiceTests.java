@@ -7,6 +7,10 @@ import eu.plgc.logic.ValidationException;
 import objectMothers.TeamObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.MutableClock;
+
+import java.time.Clock;
+import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,16 +23,20 @@ public class ScoreboardServiceTests {
     private final Team team3 = TeamObjectMother.create();
 
     private ScoreboardService scoreboardService;
+    private MutableClock clock;
 
     @BeforeEach
     void beforeEach() {
-        scoreboardService = new ScoreboardService();
+        clock = new MutableClock();
+        scoreboardService = new ScoreboardService(clock);
     }
 
     @Test
     void newMatch_forValidTeams_startsMatchAndReturnsInstanceWith0to0Score() {
 
         //arrange
+        var instant = Instant.parse("2023-02-09T10:15:30.00Z");
+        clock.setInstant(instant);
 
         //act
         Match match = scoreboardService.newMatch(team1, team2);
@@ -39,7 +47,7 @@ public class ScoreboardServiceTests {
         assertEquals(team2, match.getAwayTeam());
         assertEquals(0, match.getHomeTeamScore());
         assertEquals(0, match.getAwayTeamScore());
-        //TODO assertEquals(match.getStartTime())
+        assertEquals(instant, match.getStartTime());
 
     }
 
