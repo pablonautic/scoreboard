@@ -22,4 +22,12 @@ public class Scoreboard {
     public boolean hasMatch(Match match) {
         return matches.contains(match);
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Scoreboard{");
+        sb.append("matches=").append(matches);
+        sb.append('}');
+        return sb.toString();
+    }
 }
