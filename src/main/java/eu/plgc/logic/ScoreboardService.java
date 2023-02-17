@@ -6,6 +6,7 @@ import eu.plgc.domain.Team;
 
 import java.time.Clock;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Comparator.comparing;
 
@@ -87,6 +88,15 @@ public class ScoreboardService {
                         )
                         .toList();
     }
+
+    public Optional<Integer> getScoreForTeam(Team team) {
+        return scoreboard.getMatchesImmutable()
+                .stream()
+                .filter(match -> match.getHomeTeam().equals(team) || match.getAwayTeam().equals(team))
+                .map(match -> match.getHomeTeam().equals(team) ? match.getHomeTeamScore() : match.getAwayTeamScore())
+                .findFirst();
+    }
+
 
     boolean hasMatch(Match match) {
         return scoreboard.hasMatch(match);

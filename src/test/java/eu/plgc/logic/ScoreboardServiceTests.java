@@ -290,4 +290,20 @@ public class ScoreboardServiceTests {
         assertEquals(match2, result.get(0));
         assertEquals(match1, result.get(1));
     }
+
+    @Test
+    void getScoreForTeam_whenTeamIsInScoreboard_returnScore() {
+
+        //arrange
+        Match match1 = scoreboardService.newMatch(TEAM1, TEAM2);
+
+        scoreboardService.updateMatchScore(match1, 3, 2);
+
+        //act
+        var result = scoreboardService.getScoreForTeam(TEAM1);
+
+        //assert
+        assertEquals(3, result.get());
+
+    }
 }
